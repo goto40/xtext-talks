@@ -21,7 +21,49 @@ class DataFlowDslParsingTest {
 	@Test
 	def void loadModel() {
 		val result = parseHelper.parse('''
-			Hello Xtext!
+		package messages
+		{	
+			message M1 
+			message M2	
+			message M3
+			message M4
+			
+		}
+		
+		package components {
+			component C1 {		
+				port_in a : messages.M1
+				port_out b : messages.M2
+			}
+			component C2 {
+				port_in c : messages.M2
+				port_out d : messages.M3
+			}	
+			component C3 {
+				port_in e : messages.M3
+				port_out f : messages.M4
+			}	
+			component C4 {
+				port_in g : messages.M4
+				port_out h : messages.M1
+			}	
+		}
+		
+		package services {
+			service s1 {
+				instance c1 : components.C1
+				instance c2 : components.C2
+				instance c3 : components.C3
+				instance c4 : components.C4
+				connect c1.b to c2.c
+				connect c2.d to c3.e
+				connect c3.f to c4.g
+				connect c4.h to c1.a
+			}
+			service s2{
+				instance a1 : components.C1
+			}
+		}
 		''')
 		Assert.assertNotNull(result)
 		Assert.assertTrue(result.eResource.errors.isEmpty)

@@ -13,7 +13,7 @@ KPackage:
 	'}';
 
 KComponent:
-	'component' name=ID '{' ports+=KPort '}';
+	'component' name=ID '{' (ports+=KPort)* '}';
 
 KService:
 	'service' name=ID '{'
@@ -31,10 +31,10 @@ KPort:
 	KPortIn | KPortOut;
 
 KPortIn:
-	'port_in' name=ID '{' type=[KMessage|FQN] '}';
+	'port_in' name=ID ':' type=[KMessage|FQN];
 
 KPortOut:
-	'port_out' name=ID '{' type=[KMessage|FQN] '}';
+	'port_out' name=ID ':' type=[KMessage|FQN];
 
 KMessage:
 	'message' name=ID;
