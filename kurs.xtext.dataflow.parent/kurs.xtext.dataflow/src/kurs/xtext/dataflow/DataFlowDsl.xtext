@@ -1,0 +1,45 @@
+grammar kurs.xtext.dataflow.DataFlowDsl with org.eclipse.xtext.common.Terminals
+
+generate dataFlowDsl "http://www.xtext.kurs/dataflow/DataFlowDsl"
+
+Model:
+	packages+=KPackage*;
+
+KPackage:
+	'package' name=ID '{'
+	(components+=KComponent |
+	messages+=KMessage |
+	services+=KService)*
+	'}';
+
+KComponent:
+	'component' name=ID '{' ports+=KPort '}';
+
+KService:
+	'service' name=ID '{'
+	(instances+=KInstance |
+	connections+=KConnection)*
+	'}';
+
+KConnection:
+	'connect' srcInstance=[KInstance] '.' srcPort=[KPortOut] 'to' dstInstance=[KInstance] '.' dstPort=[KPortIn];
+
+KInstance:
+	'instance' name=ID ':' type=[KComponent|FQN];
+
+KPort:
+	KPortIn | KPortOut;
+
+KPortIn:
+	'port_in' name=ID '{' type=[KMessage|FQN] '}';
+
+KPortOut:
+	'port_out' name=ID '{' type=[KMessage|FQN] '}';
+
+KMessage:
+	'message' name=ID;
+
+FQN hidden():
+	ID ('.' ID)*;
+	// allows "packagename,componame"
+// (without spaces inbetween – no WS hidden)
