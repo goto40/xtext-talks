@@ -25,5 +25,6 @@ Export-Package: kurs.xtext.dataflow.dataFlowDsl.util,
  kurs.xtext.dataflow.scoping,
  kurs.xtext.dataflow,
  kurs.xtext.dataflow.dataFlowDsl.impl,
- kurs.xtext.dataflow.validation
+ kurs.xtext.dataflow.validation,
+ kurs.xtext.dataflow.formatting2
 Import-Package: org.apache.log4j

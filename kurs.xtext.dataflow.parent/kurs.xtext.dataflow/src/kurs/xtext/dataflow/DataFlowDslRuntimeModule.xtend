@@ -3,15 +3,10 @@
  */
 package kurs.xtext.dataflow
 
-import kurs.xtext.dataflow.formatting.MyFormatter
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 class DataFlowDslRuntimeModule extends AbstractDataFlowDslRuntimeModule {
-	
-	override bindIFormatter() {
-		MyFormatter
-	}
 	
 }

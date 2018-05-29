@@ -7,7 +7,8 @@ Model:
 
 KPackage:
 	'package' name=ID '{'
-	(components+=KComponent |
+	(packages+=KPackage |
+	components+=KComponent |
 	messages+=KMessage |
 	services+=KService)*
 	'}';
