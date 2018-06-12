@@ -1,10 +1,11 @@
-\documentclass[]{article}
+\documentclass[a4]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 % use microtype if available
@@ -55,11 +56,13 @@
 
 \date{}
 
+\title{Xtext Tutorium}
+\date{2018}
+\author{Pierre Bayerl
+\and Tim Schneider}
 \begin{document}
-
-Xtext Tutorium
-
-2017, Pierre Bayerl und Tim Schneider
+\maketitle
+\tableofcontents
 
 \section[Zusammenfassung]{\texorpdfstring{\protect\hypertarget{anchor}{}{}Zusammenfassung}{Zusammenfassung}}\label{zusammenfassung}
 
@@ -98,28 +101,28 @@ Literatur}{Quellen, weiterführende Literatur}}\label{quellen-weiterfuxfchrende-
 \def\labelenumi{\arabic{enumi}.}
 \item
   \protect\hypertarget{anchor-1}{}{}H. Rentz-Reichert (Protos Software):
-  "Entwicklung domänenspezifischer Sprachen und Code-Generatoren mit
-  Xtext und Xtend" (Kurs, Regensburg, 2017/05).
+  \dq Entwicklung domänenspezifischer Sprachen und Code-Generatoren mit
+  Xtext und Xtend\dq (Kurs, Regensburg, 2017/05).
 \item
-  \protect\hypertarget{anchor-2}{}{}L. Bettini: "Implementing
-  Domain-Specific Languages with Xtext and Xtend - Second Edition``
+  \protect\hypertarget{anchor-2}{}{}L. Bettini: \dq Implementing
+  Domain-Specific Languages with Xtext and Xtend - Second Edition\dq
   (Packt Publishing; 2nd Revised edition, 31. August 2016).
 \item
-  \protect\hypertarget{anchor-3}{}{}A. Mooij, J. Hooman: "Creating a
-  Domain Specific Language (DSL) with Xtext",
+  \protect\hypertarget{anchor-3}{}{}A. Mooij, J. Hooman: \dq Creating a
+  Domain Specific Language (DSL) with Xtext\dq,
   \url{http://www.cs.kun.nl/J.Hooman/DSL/Xtext_DSL_GettingStarted_Neon.pdf}
   (2017/06)
 \item
   \protect\hypertarget{anchor-4}{}{}A. Mooij, K. Triantafyllidis, J.
-  Hooman: "Advanced Xtext Manual on Modularity",
+  Hooman: \dq Advanced Xtext Manual on Modularity\dq,
   \url{http://www.cs.kun.nl/J.Hooman/DSL/AdvancedXtextManual.pdf}
   (2017/06)
 \item
   \protect\hypertarget{anchor-5}{}{}Xtext Webseite:
   \url{https://eclipse.org/Xtext/} (2017/06)
 \item
-  \protect\hypertarget{anchor-11}{}{}Hadi Hariri: „Kotlin for C++
-  Developers``, Overload Journal \#139, June 2017;
+  \protect\hypertarget{anchor-11}{}{}Hadi Hariri: \dq Kotlin for C++
+  Developers\dq, Overload Journal \#139, June 2017;
   \url{https://accu.org/var/uploads/journals/Overload139.pdf}, 2017/06)
 \item
   \protect\hypertarget{anchor-7}{}{}\url{https://www.heise.de/developer/artikel/Werkzeuge-fuer-domaenenspezifische-Sprachen-227190.html}
@@ -148,13 +151,11 @@ Um die Übungen in diesem Dokument durchzuführen, muss man Eclipse mit
 den notwendigen Xtext Plugins installiert haben (Aktuelle Version:
 Oxygen).
 
-Hinweise: \textbf{(1)} Der notwendige Antlr Parser darf nicht mit
+Hinweise: Der notwendige Antlr Parser darf nicht mit
 Eclipse zusammen verteilt werden (Open Source Lizenz passen nicht
 zusammen). Er muss daher ggf. separat installiert werden
 (\url{http://download.itemis.de/updates}), sonst will Eclipse ihn bei
-jedem neuen Xtext Projekt neu herunterladen. \textbf{(2)} In den
-folgenden Abschnitten sind Übungs-Meilensteine mit folgendem Symbol
-dargestellt:
+jedem neuen Xtext Projekt neu herunterladen.
 
 \subsection[Eclipse herunterladen, entpacken und
 starten]{\texorpdfstring{\protect\hypertarget{anchor-15}{}{}Eclipse
@@ -182,7 +183,9 @@ installieren]{\texorpdfstring{\protect\hypertarget{anchor-16}{}{}Eclipse
 starten und Xtext
 installieren}{Eclipse starten und Xtext installieren}}\label{eclipse-starten-und-xtext-installieren}
 
-\includegraphics[width=3.73660in,height=4.50470in]{./Pictures/1000020100000265000002E3C3D1AD84052DE450.png}Um
+\includegraphics[width=3.73660in,height=4.50470in]{./Pictures/1000020100000265000002E3C3D1AD84052DE450.png}
+
+Um
 Xtext zu installieren muss im „Help`` Menü „Install Modeling
 Components`` ausgewählt werden. Im folgendem Dialog wählt man dann Xtext
 aus und bestätigt mit „Finish``. Ist die Installation erfolgreich, wird
@@ -208,14 +211,13 @@ Man soll sich dabei an die Syntax der Grammatik gewöhnen. Diese ist das
 Mittel, um das Metamodell für die Struktur des zu definierenden Modells
 zu spezifizieren.
 
-\subsection{}\label{section}
-
 \subsection[Neues Xtext Projekt
 anlegen]{\texorpdfstring{\protect\hypertarget{anchor-18}{}{}Neues Xtext
 Projekt
 anlegen}{Neues Xtext Projekt anlegen}}\label{neues-xtext-projekt-anlegen}
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}\includegraphics[width=4.24090in,height=5.15550in]{./Pictures/10000201000002650000028845D817BB3C722F32.png}
+% \includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+\includegraphics[width=4.24090in,height=5.15550in]{./Pictures/10000201000002650000028845D817BB3C722F32.png}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -327,7 +329,8 @@ Sprache ausprobieren:
   \includegraphics[width=4.36890in,height=1.40830in]{./Pictures/1000020100000263000000C5AC8B604E35219E41.png}
 \end{enumerate}
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}Nun
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+Nun
 können Sie die Hallo Welt Grammatik ausprobieren\\
 (probieren Sie CTRL-Space aus) und geben Sie dann folgendes Beispiel
 ein:
@@ -447,7 +450,8 @@ Folgende Eingaben sollen möglich werden:
 
 \textbf{package} test1 \{
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}\textbf{Component}
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+\textbf{Component}
 PC \{
 
 \}
@@ -499,8 +503,6 @@ KInstance: 'instance' name=ID ':' type={[}\emph{KComponent}{]};
     \protect\hyperlink{anchor-3}{/3/}, \protect\hyperlink{anchor-2}{/2/}
   \end{itemize}
 \end{itemize}
-
-\subsubsection{}\label{section-1}
 
 \subsubsection[Vererbung]{\texorpdfstring{\protect\hypertarget{anchor-25}{}{}Vererbung}{Vererbung}}\label{vererbung}
 
@@ -555,7 +557,8 @@ Probieren Sie nun Ihre Grammatik aus (Abschnitte
 \protect\hyperlink{anchor-25}{4.4.2},
 \protect\hyperlink{anchor-26}{4.4.3}):
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}\textbf{package}
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+\textbf{package}
 test1 \{
 
 \textbf{Component} PC \{
@@ -751,7 +754,8 @@ Beispiel}{Validierung: Beispiel}}\label{validierung-beispiel}
 kurs.xtext.dataflow.validation.DataFlowDslValidator.xtend, kommentieren
 Sie den auskommentierten Teil ein und modifizieren Sie ihn:
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}\textbf{package}
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+\textbf{package}
 kurs.xtext.dataflow.validation
 
 \textbf{import} org.eclipse.xtext.validation.Check
@@ -1097,7 +1101,8 @@ Hinweise:
 
 Ausgabe:
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}The
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+The
 Components of the model are:
 
 Package test1
@@ -1282,7 +1287,8 @@ FQN \textbf{hidden}(): ID('.'ID)*; // allows
 
 Damit kann man nun das obige Beispiel erfolgreich korrigieren:
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}...
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+...
 
 \textbf{package} services \{
 
@@ -1406,7 +1412,8 @@ DataFlowDslPackage.Literals.\emph{KCONNECTION\_\_DST\_PORT}) \{
 
 \textbf{val} kconn = context \textbf{as} KConnection;
 
-\includegraphics[width=0.62800in,height=0.62800in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}\textbf{val}
+%\includegraphics[width=0.62800in,height=0.62800in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+\textbf{val}
 ports = kconn.dstInstance.type.ports.\emph{filter}(KPortIn)
 
 \textbf{return} Scopes.\emph{scopeFor}(ports);
@@ -1470,7 +1477,8 @@ aus Abschnitt \protect\hyperlink{anchor-46}{8.2}:
 
 Werden beide Variationen realisiert, ist folgende Eingabe möglich:
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}\textbf{package}
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+\textbf{package}
 test1 \{
 
 // Variation 1:
@@ -1893,7 +1901,8 @@ Als Beispiel verwenden wir diesmal eine Sprache zur Definition von
 Variablen und deren Initialisierung, deren Grammatik wie folgt definiert
 ist:
 
-\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}\textbf{grammar}
+%\includegraphics[width=0.98350in,height=0.98350in]{./Pictures/1000020100000080000000807EA91CDFA7B7F397.png}
+\textbf{grammar}
 kurs.xtext.VarLang \textbf{with} org.eclipse.xtext.common.Terminals
 
 \textbf{generate} varLang "http://www.xtext.kurs/VarLang"
@@ -2100,5 +2109,31 @@ Modellrepräsentationen:
 \end{itemize}
 
 Wir hoffen es hat Spaß gemacht!
+
+\end{document}
+
+\begin{document}
+
+
+
+\end{document}
+\begin{document}
+
+
+
+\end{document}
+\begin{document}
+
+
+
+\end{document}
+\begin{document}
+
+
+
+\end{document}
+\begin{document}
+
+
 
 \end{document}
